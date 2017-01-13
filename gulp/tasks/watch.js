@@ -15,10 +15,7 @@ var config = require('../config');
  * Tasks
  */
 gulp.task('watch', ['default', 'browsersync'], function () {
-    watch(config.scss.glob, function (event) {
-        gulp.start('scss');
-    });
-    watch(config.js.glob, function (event) {
-        gulp.start('browsersyncReload');
-    });
+    gulp.watch(config.files, ['browsersyncReload']);
+    gulp.watch(config.scss.glob, ['scss']);
+    gulp.watch(config.js.glob, ['browsersyncReload', 'transpile']);
 });

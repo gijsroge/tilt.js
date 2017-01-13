@@ -4,14 +4,21 @@
     <meta charset="UTF-8">
     <title>Tilt</title>
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,600,700" rel="stylesheet">
+    <link rel="stylesheet" href="/demo/css/tilt.css">
 </head>
 <body>
 
+<div class="js-tilt [ c-tilt ]"></div>
+
+<div class="js-tilt2 [ c-tilt ]"></div>
+
 <script src="./../node_modules/jquery/dist/jquery.slim.min.js"></script>
-<script src="./../src/tilt.js"></script>
+<script src="./../dest/tilt.js"></script>
 <script>
     var tilt = $('.js-tilt').tilt();
-    console.log(tilt);
+    var tilt2 = $('.js-tilt2').tilt({class: 'test'});
+    tilt.test();
+    tilt2.test();
 </script>
 </body>
 </html>

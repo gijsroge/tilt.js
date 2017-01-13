@@ -1,11 +1,20 @@
 (function ($) {
-    $.fn.tilt = function (options) {
+    $.fn.tilt = function(options) {
 
-        var settings = $.extend({
-
+        const settings = $.extend({
+            class: 'is-tilting'
         }, options);
 
+        this.state = {
+            active: true,
+            test: false,
+            settings: settings
+        };
 
-        return this;
+        this.test = () => {console.log(this.state)};
+
+        return this.each(function () {
+
+        });
     };
 }(jQuery));
