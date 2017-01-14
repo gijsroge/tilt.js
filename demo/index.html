@@ -12,13 +12,14 @@
 
 <div class="js-tilt [ c-tilt ]" data-tilt-class="second"></div>
 
-<div class="js-tilt2 [ c-tilt ]" data-tilt-class="third"></div>
+    <div class="js-tilt2 [ c-tilt ]" data-tilt-class="third"></div>
 
 <script src="./../node_modules/jquery/dist/jquery.slim.min.js"></script>
 <script src="./../dest/tilt.js"></script>
 <script>
-    $('.js-tilt').tilt();
+    const test = $('.js-tilt').tilt();
     $('.js-tilt2').tilt();
+    test[0].updateTransforms(.05 ,.1)
 </script>
 </body>
 </html>
