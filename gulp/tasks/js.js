@@ -19,8 +19,8 @@ var config = require('../config');
 gulp.task("transpile", function () {
     return gulp.src(config.js.glob)
         .pipe(sourcemaps.init())
+        .pipe(plumber())
         .pipe(babel())
         .pipe(sourcemaps.write("."))
-        .pipe(plumber())
         .pipe(gulp.dest(config.js.dest));
 });

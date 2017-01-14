@@ -32,7 +32,7 @@ module.exports = {
     /**
      * Files
      */
-    files: '**/*.html',
+    files: path + 'demo/**/*.html',
 
     /**
      * Js Settings
