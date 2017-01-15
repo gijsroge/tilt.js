@@ -1,36 +1,16 @@
 (function ($) {
     $.fn.tilt = function (options) {
 
-        function tick() {
-            if (this.ticking) return;
-            requestAnimationFrame(this.updateTransforms.bind(this, event));
-            this.ticking = true;
-        }
-
-        /**
-         * Get tilt values
-         *
-         * @returns {{x: tilt value, y: tilt value}}
-         */
-        function getValues(event) {
-            // Position inside instance
-            const offset = $(this).offset();
-            // Dimensions of instance
-            const width = $(this).width();
-            const height = $(this).height();
-            // x or y position inside instance / width of instance = percentage of position inside instance * the max tilt value
-            const posx = (((event.pageX - offset.left) / width) * this.settings.maxTilt) - (this.settings.maxTilt / 2);
-            const posy = (((event.pageY - offset.top) / height) * this.settings.maxTilt) - (this.settings.maxTilt / 2);
-            // Return x & y tilt values
-            return {posx, posy}
-        }
-
         /**
          * Loop every instance
          */
         return this.each(function () {
 
-            this.ticking = false;
+            this.requestTick = () => {
+                if (this.ticking) return;
+                requestAnimationFrame(this.updateTransforms);
+                this.ticking = true;
+            };
 
             /**
              * Default settings merged with user settings
@@ -41,23 +21,62 @@
                 class: $(this).is('[data-tilt-class]') ? $(this).data('tilt-class') : 'is-tilting',
                 maxTilt: $(this).is('[data-tilt-max]') ? $(this).data('tilt-max') : 10,
                 perspective: $(this).is('[data-tilt-perspective]') ? $(this).data('tilt-perspective') : 1000,
+                easing: $(this).is('[data-tilt-easing]') ? $(this).data('tilt-easing') : 'ease-out',
+                scale: $(this).is('[data-tilt-scale]') ? $(this).data('tilt-scale') : '1',
+                speed: $(this).is('[data-tilt-speed]') ? $(this).data('tilt-speed') : '.3s'
             }, options);
 
             /**
              * Bind mouse movement evens on instance
              */
             this.bindEvents = () => {
-                $(this).on('mousemove', tick);
-                $(this).on('mouseleave', this.resetTransforms);
+                $(this).on('mousemove', this.mouseMove);
+                $(this).on('mouseenter', this.mouseEnter);
+                $(this).on('mouseleave', this.mouseLeave);
             };
 
-            this.resetTransforms = () =>{
-                $(this).css('transform', '');
+            this.mouseEnter = () => {
+                this.ticking = false;
+                $(this).css('will-change', 'transform');
             };
 
-            this.updateTransforms = (event) => {
-                const transforms = getValues.call(this, event);
-                $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(${transforms.posx}deg) rotateY(${transforms.posy}deg)`);
+            this.mouseMove = () => {
+                this.mousePosition = {x: event.pageX, y: event.pageY};
+                this.requestTick();
+            };
+
+            this.mouseLeave = () => {
+                this.reset = true;
+                $(this).css('will-change', '');
+                this.requestTick();
+            };
+
+            /**
+             * Get tilt values
+             *
+             * @returns {{x: tilt value, y: tilt value}}
+             */
+            this.getValues = () => {
+                const width = this.clientWidth;
+                const height = this.clientHeight;
+                // x or y position inside instance / width of instance = percentage of position inside instance * the max tilt value
+                const tiltX = ((this.settings.maxTilt / 2) - (((this.mousePosition.x - $(this).offset().left) / width) * this.settings.maxTilt)).toFixed(2);
+                const tiltY = ((((this.mousePosition.y - $(this).offset().top) / height) * this.settings.maxTilt) - (this.settings.maxTilt / 2)).toFixed(2);
+                // Return x & y tilt values
+                return {tiltX, tiltY}
+            };
+
+            this.updateTransforms = () => {
+                const transforms = this.getValues();
+
+                if(this.reset){
+                    this.reset = false;
+                    $(this).css('transform', '');
+                    return;
+                }else{
+                    $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(${transforms.tiltY}deg) rotateY(${transforms.tiltX}deg) scale3d(${this.settings.scale},${this.settings.scale},${this.settings.scale})`);
+                }
+
                 this.ticking = false;
             };
 

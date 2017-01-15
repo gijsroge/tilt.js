@@ -32,6 +32,10 @@ amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
 
+animateplus@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/animateplus/-/animateplus-1.4.0.tgz#e6a11c89dccfc6f923bb19e2cf7b6c9a103d1905"
+
 ansi-regex@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-2.0.0.tgz#c5061b6e0ef8a81775e50f5d66151bf6bf371107"
@@ -806,11 +810,11 @@ camelcase@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/camelcase/-/camelcase-3.0.0.tgz#32fc4b9fcdaf845fcdf7e73bb97cac2261f0ab0a"
 
-caniuse-db@^1.0.30000444, caniuse-db@^1.0.30000525:
+caniuse-db@^1.0.30000444:
   version "1.0.30000563"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000563.tgz#6958d81bc45e93310453dd70778e8169b7b55256"
 
-caniuse-db@^1.0.30000604:
+caniuse-db@^1.0.30000525, caniuse-db@^1.0.30000604:
   version "1.0.30000609"
   resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000609.tgz#8c141ef09e8c66b7cb6c2b288fa931cc331e38c6"
 

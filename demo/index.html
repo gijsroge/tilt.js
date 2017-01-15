@@ -8,18 +8,14 @@
 </head>
 <body>
 
-<div class="js-tilt [ c-tilt ]" data-tilt-class="first"></div>
-
-<div class="js-tilt [ c-tilt ]" data-tilt-class="second"></div>
-
-    <div class="js-tilt2 [ c-tilt ]" data-tilt-class="third"></div>
-
+<img src="/demo/trvp9jiyc1e-massimo-mancini.jpg" class="js-tilt [ c-tilt ]" alt="">
+<img src="/demo/trvp9jiyc1e-massimo-mancini.jpg" class="js-tilt [ c-tilt ]" alt="">
+<img src="/demo/trvp9jiyc1e-massimo-mancini.jpg" class="js-tilt [ c-tilt ]" alt="">
 <script src="./../node_modules/jquery/dist/jquery.slim.min.js"></script>
+<script src="./../node_modules/animateplus/animate.min.js"></script>
 <script src="./../dest/tilt.js"></script>
 <script>
-    const test = $('.js-tilt').tilt();
-    $('.js-tilt2').tilt();
-    test[0].updateTransforms(.05 ,.1)
+    const tilt = $('.js-tilt').tilt();
 </script>
 </body>
 </html>
