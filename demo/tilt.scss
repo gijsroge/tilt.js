@@ -1,8 +1,14 @@
-body{
-  padding:5em;
+body {
+  padding: 5em;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
 }
-.c-tilt{
-  width:500px;
-  background: black;
-  //transition: .2s ease-out;
+
+.c-tilt {
+  width: 500px;
+  height: 500px;
+  background-color: grey;
+  margin: 5vh;
 }

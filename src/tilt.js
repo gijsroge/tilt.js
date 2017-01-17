@@ -19,9 +19,9 @@
              */
             this.settings = $.extend({
                 class: $(this).is('[data-tilt-class]') ? $(this).data('tilt-class') : 'is-tilting',
-                maxTilt: $(this).is('[data-tilt-max]') ? $(this).data('tilt-max') : 10,
+                maxTilt: $(this).is('[data-tilt-max]') ? $(this).data('tilt-max') : 20,
                 perspective: $(this).is('[data-tilt-perspective]') ? $(this).data('tilt-perspective') : 1000,
-                easing: $(this).is('[data-tilt-easing]') ? $(this).data('tilt-easing') : 'ease-out',
+                easing: $(this).is('[data-tilt-easing]') ? $(this).data('tilt-easing') : 'cubic-bezier(.03,.98,.52,.99)',
                 scale: $(this).is('[data-tilt-scale]') ? $(this).data('tilt-scale') : '1',
                 speed: $(this).is('[data-tilt-speed]') ? $(this).data('tilt-speed') : '.3s'
             }, options);
@@ -37,7 +37,7 @@
 
             this.mouseEnter = () => {
                 this.ticking = false;
-                $(this).css('will-change', 'transform');
+                $(this).css({'will-change': 'transform', 'transition': `${this.settings.speed} ${this.settings.easing}`});
             };
 
             this.mouseMove = () => {
@@ -47,7 +47,6 @@
 
             this.mouseLeave = () => {
                 this.reset = true;
-                $(this).css('will-change', '');
                 this.requestTick();
             };
 
@@ -68,10 +67,11 @@
 
             this.updateTransforms = () => {
                 const transforms = this.getValues();
+                console.table([transforms]);
 
                 if(this.reset){
                     this.reset = false;
-                    $(this).css('transform', '');
+                    $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(0deg) rotateY(0deg)`);
                     return;
                 }else{
                     $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(${transforms.tiltY}deg) rotateY(${transforms.tiltX}deg) scale3d(${this.settings.scale},${this.settings.scale},${this.settings.scale})`);
