@@ -1,4 +1,5 @@
 body {
+  font-family: 'Fira Sans';
   padding: 5em;
   display: flex;
   justify-content: space-between;
@@ -6,9 +7,18 @@ body {
   align-items: center;
 }
 
-.c-tilt {
-  width: 500px;
-  height: 500px;
-  background-color: grey;
-  margin: 5vh;
+header{
+  padding: 5em;
+  font-size: 200%;
+  span{
+    display: inline-block;
+    box-shadow: 0 0 50px 0 rgba(black, .05);
+    padding: .25em;
+    &:nth-child(even){
+      background-color: white;
+    }
+    &:nth-child(odd){
+      background-color: rgba(black, .05);
+    }
+  }
 }

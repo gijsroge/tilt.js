@@ -33,6 +33,6 @@ gulp.task('scss', function () {
       .on('error', sass.logError))
     .pipe(postcss(processors, {syntax: syntax}))
     .pipe(sourcemaps.write('.'))
-    .pipe(browserSync.stream({match: '**/*.css'}))
     .pipe(gulp.dest(config.scss.dest))
+    .pipe(browserSync.stream({match: '**/*.css'}))
 });

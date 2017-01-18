@@ -37,7 +37,7 @@
 
             this.mouseEnter = () => {
                 this.ticking = false;
-                $(this).css({'will-change': 'transform', 'transition': `${this.settings.speed} ${this.settings.easing}`});
+                $(this).css({'will-change': 'transform', 'transition': `${this.settings.speed}ms ${this.settings.easing}`});
             };
 
             this.mouseMove = () => {
