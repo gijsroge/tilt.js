@@ -6,6 +6,9 @@
          */
         return this.each(function () {
 
+            /**
+             * RequestAnimationFrame
+             */
             this.requestTick = () => {
                 if (this.ticking) return;
                 requestAnimationFrame(this.updateTransforms);
@@ -23,7 +26,8 @@
                 perspective: $(this).is('[data-tilt-perspective]') ? $(this).data('tilt-perspective') : 1000,
                 easing: $(this).is('[data-tilt-easing]') ? $(this).data('tilt-easing') : 'cubic-bezier(.03,.98,.52,.99)',
                 scale: $(this).is('[data-tilt-scale]') ? $(this).data('tilt-scale') : '1',
-                speed: $(this).is('[data-tilt-speed]') ? $(this).data('tilt-speed') : '.3s'
+                speed: $(this).is('[data-tilt-speed]') ? $(this).data('tilt-speed') : '300',
+                transition: $(this).is('[data-tilt-transition]') ? $(this).data('tilt-transition') : true
             }, options);
 
             /**
@@ -34,17 +38,15 @@
                 $(this).on('mouseenter', this.mouseEnter);
                 $(this).on('mouseleave', this.mouseLeave);
             };
-
             this.mouseEnter = () => {
                 this.ticking = false;
-                $(this).css({'will-change': 'transform', 'transition': `${this.settings.speed}ms ${this.settings.easing}`});
+                this.settings.transition ? $(this).css({'transition': `${this.settings.speed}ms ${this.settings.easing}`}) : '';
+                $(this).css({'will-change': 'transform'});
             };
-
             this.mouseMove = () => {
                 this.mousePosition = {x: event.pageX, y: event.pageY};
                 this.requestTick();
             };
-
             this.mouseLeave = () => {
                 this.reset = true;
                 this.requestTick();
@@ -65,15 +67,17 @@
                 return {tiltX, tiltY}
             };
 
+            /**
+             * Update tilt transforms on mousemove
+             */
             this.updateTransforms = () => {
                 const transforms = this.getValues();
-                console.table([transforms]);
 
-                if(this.reset){
+                if (this.reset) {
                     this.reset = false;
                     $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(0deg) rotateY(0deg)`);
                     return;
-                }else{
+                } else {
                     $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(${transforms.tiltY}deg) rotateY(${transforms.tiltX}deg) scale3d(${this.settings.scale},${this.settings.scale},${this.settings.scale})`);
                 }
 

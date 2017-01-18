@@ -14,15 +14,26 @@
     <p>
         A tiny requestAnimationFrame powered 60+fps lightweight parallax tilt effect for jQuery.
     </p>
+    <div class="c-test js-tilt">
+        <div class="c-test-inner">
+
+        </div>
+    </div>
 </header>
 <script src="./../node_modules/jquery/dist/jquery.slim.min.js"></script>
 <script src="./../node_modules/animateplus/animate.min.js"></script>
 <script src="./../dest/tilt.js"></script>
 <script>
-    const tilt = $('.js-logo-tilt span').tilt({
+    $('.js-logo-tilt span').tilt({
         speed: 1000,
         maxTilt: 20,
         perspective: 50
+    });
+
+    $('.js-tilt').tilt({
+        transition: false,
+        maxTilt: 50,
+        perspective: 300
     });
 </script>
 </body>

@@ -1,14 +1,17 @@
 body {
   font-family: 'Fira Sans';
-  padding: 5em;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  max-width: 1200px;
+  min-height:100vh;
+  padding:0;
+  margin:0 auto;
 }
 
 header{
-  padding: 5em;
   font-size: 200%;
   span{
     display: inline-block;
@@ -20,5 +23,32 @@ header{
     &:nth-child(odd){
       background-color: rgba(black, .05);
     }
+  }
+}
+
+.c-test{
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: lightgrey;
+  transform-style: preserve-3d;
+
+
+  &-inner{
+    &:hover{
+      transform: translateZ(100px) scale(.7);
+    }
+    $gutter: 50px;
+    will-change: transform;
+    transition: .15s;
+    position: absolute;
+    width: calc(100% - #{$gutter});
+    height: calc(100% - #{$gutter});
+    background-color: red;
+    transform: translateZ(50px) scale(0.5);
   }
 }
