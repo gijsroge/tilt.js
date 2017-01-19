@@ -38,16 +38,21 @@
                 $(this).on('mouseenter', this.mouseEnter);
                 $(this).on('mouseleave', this.mouseLeave);
             };
+            this.setTransition = () =>{
+                $(this).css({'transition': `${this.settings.speed}ms ${this.settings.easing}`});
+                setTimeout(() => {$(this).css({'transition': ''})}, this.settings.speed);
+            };
             this.mouseEnter = () => {
                 this.ticking = false;
-                this.settings.transition ? $(this).css({'transition': `${this.settings.speed}ms ${this.settings.easing}`}) : '';
                 $(this).css({'will-change': 'transform'});
+                this.setTransition();
             };
             this.mouseMove = () => {
                 this.mousePosition = {x: event.pageX, y: event.pageY};
                 this.requestTick();
             };
             this.mouseLeave = () => {
+                this.setTransition();
                 this.reset = true;
                 this.requestTick();
             };
