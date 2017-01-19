@@ -21,13 +21,13 @@
              * @type {*}
              */
             this.settings = $.extend({
-                class: $(this).is('[data-tilt-class]') ? $(this).data('tilt-class') : 'is-tilting',
                 maxTilt: $(this).is('[data-tilt-max]') ? $(this).data('tilt-max') : 20,
                 perspective: $(this).is('[data-tilt-perspective]') ? $(this).data('tilt-perspective') : 1000,
                 easing: $(this).is('[data-tilt-easing]') ? $(this).data('tilt-easing') : 'cubic-bezier(.03,.98,.52,.99)',
                 scale: $(this).is('[data-tilt-scale]') ? $(this).data('tilt-scale') : '1',
                 speed: $(this).is('[data-tilt-speed]') ? $(this).data('tilt-speed') : '300',
-                transition: $(this).is('[data-tilt-transition]') ? $(this).data('tilt-transition') : true
+                transition: $(this).is('[data-tilt-transition]') ? $(this).data('tilt-transition') : true,
+                axis: $(this).is('[data-tilt-axis]') ? $(this).data('tilt-axis') : null
             }, options);
 
             /**
@@ -39,8 +39,9 @@
                 $(this).on('mouseleave', this.mouseLeave);
             };
             this.setTransition = () =>{
+                if (this.timeout !== undefined) clearTimeout(this.timeout);
                 $(this).css({'transition': `${this.settings.speed}ms ${this.settings.easing}`});
-                setTimeout(() => {$(this).css({'transition': ''})}, this.settings.speed);
+                this.timeout = setTimeout(() => {$(this).css({'transition': ''})}, this.settings.speed);
             };
             this.mouseEnter = () => {
                 this.ticking = false;
@@ -65,11 +66,13 @@
             this.getValues = () => {
                 const width = this.clientWidth;
                 const height = this.clientHeight;
+                const percentageX = (this.mousePosition.x - $(this).offset().left) / width;
+                const percentageY = (this.mousePosition.y - $(this).offset().top) / height;
                 // x or y position inside instance / width of instance = percentage of position inside instance * the max tilt value
-                const tiltX = ((this.settings.maxTilt / 2) - (((this.mousePosition.x - $(this).offset().left) / width) * this.settings.maxTilt)).toFixed(2);
-                const tiltY = ((((this.mousePosition.y - $(this).offset().top) / height) * this.settings.maxTilt) - (this.settings.maxTilt / 2)).toFixed(2);
+                const tiltX = ((this.settings.maxTilt / 2) - ((percentageX) * this.settings.maxTilt)).toFixed(2);
+                const tiltY = (((percentageY) * this.settings.maxTilt) - (this.settings.maxTilt / 2)).toFixed(2);
                 // Return x & y tilt values
-                return {tiltX, tiltY}
+                return {tiltX, tiltY, 'percentageX' : percentageX * 100, 'percentageY':  percentageY * 100}
             };
 
             /**
@@ -83,9 +86,10 @@
                     $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(0deg) rotateY(0deg)`);
                     return;
                 } else {
-                    $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(${transforms.tiltY}deg) rotateY(${transforms.tiltX}deg) scale3d(${this.settings.scale},${this.settings.scale},${this.settings.scale})`);
+                    $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(${this.settings.axis === 'x' ? 0 : transforms.tiltY}deg) rotateY(${this.settings.axis === 'y' ? 0 : transforms.tiltX}deg) scale3d(${this.settings.scale},${this.settings.scale},${this.settings.scale})`);
                 }
 
+                $(this).trigger("change", [transforms]);
                 this.ticking = false;
             };
 

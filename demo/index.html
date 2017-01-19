@@ -29,10 +29,14 @@
         perspective: 50
     });
 
-    $('.js-tilt').tilt({
+    const tilt = $('.js-tilt').tilt({
         maxTilt: 50,
         perspective: 300
     });
+
+    tilt.on('change', function (e, transforms) {
+        console.log(transforms);
+    })
 </script>
 </body>
 </html>
