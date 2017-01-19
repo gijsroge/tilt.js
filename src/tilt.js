@@ -47,6 +47,9 @@
                 this.ticking = false;
                 $(this).css({'will-change': 'transform'});
                 this.setTransition();
+
+                // Trigger change event
+                $(this).trigger("tilt.mouseEnter");
             };
             this.mouseMove = () => {
                 this.mousePosition = {x: event.pageX, y: event.pageY};
@@ -56,6 +59,9 @@
                 this.setTransition();
                 this.reset = true;
                 this.requestTick();
+
+                // Trigger change event
+                $(this).trigger("tilt.mouseLeave");
             };
 
             /**
@@ -89,7 +95,9 @@
                     $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(${this.settings.axis === 'x' ? 0 : transforms.tiltY}deg) rotateY(${this.settings.axis === 'y' ? 0 : transforms.tiltX}deg) scale3d(${this.settings.scale},${this.settings.scale},${this.settings.scale})`);
                 }
 
+                // Trigger change event
                 $(this).trigger("change", [transforms]);
+
                 this.ticking = false;
             };
 
