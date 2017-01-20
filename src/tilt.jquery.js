@@ -47,7 +47,7 @@
                 if (this.timeout !== undefined) clearTimeout(this.timeout);
                 $(this).css({'transition': `${this.settings.speed}ms ${this.settings.easing}`});
                 this.timeout = setTimeout(() => {
-                    $(this).css({'transition': ''})
+                    $(this).css({'transition': ''});
                 }, this.settings.speed);
             };
 
@@ -92,7 +92,7 @@
 
                 reset: () => {
                     this.mouseLeave();
-                    setTimeout(() => {this.reset = false;},this.settings.transition)
+                    setTimeout(() => {this.reset = false;},this.settings.transition);
                 },
 
                 destroy: () => {
@@ -115,7 +115,7 @@
                 const tiltX = ((this.settings.maxTilt / 2) - ((percentageX) * this.settings.maxTilt)).toFixed(2);
                 const tiltY = (((percentageY) * this.settings.maxTilt) - (this.settings.maxTilt / 2)).toFixed(2);
                 // Return x & y tilt values
-                return {tiltX, tiltY, 'percentageX': percentageX * 100, 'percentageY': percentageY * 100}
+                return {tiltX, tiltY, 'percentageX': percentageX * 100, 'percentageY': percentageY * 100};
             };
 
             /**

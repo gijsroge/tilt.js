@@ -34,13 +34,14 @@
         perspective: 300
     });
 
-
     tilt.on('change', function (e, transforms) {
         console.log(transforms);
     });
+
     tilt.on('tilt.mouseLeave', function (e) {
         console.log(e);
     });
+
     tilt.on('tilt.mouseEnter', function (e) {
         console.log(e);
     });
