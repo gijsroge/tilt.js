@@ -93,6 +93,11 @@
                 reset: () => {
                     this.mouseLeave();
                     setTimeout(() => {this.reset = false;},this.settings.transition)
+                },
+
+                destroy: () => {
+                    $(this).css({'will-change': '','transform': ''});
+                    $(this).off('mousemove mouseenter mouseleave');
                 }
             };
 
