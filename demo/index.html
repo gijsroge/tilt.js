@@ -10,31 +10,22 @@
 <body>
 
 <header>
-    <h1 class="js-logo-tilt"><span>tilt</span><span>.js</span></h1>
+    <h1><span class="js-tilt">tilt</span><span class="js-tilt">.js</span></h1>
     <p>
         A tiny requestAnimationFrame powered 60+fps lightweight parallax tilt effect for jQuery.
     </p>
-    <div class="c-test js-tilt">
-        <div class="c-test-inner">
-
-        </div>
-    </div>
+    <div class="c-test js-tilt"><div class="c-test-inner"></div></div>
 </header>
 <script src="./../node_modules/jquery/dist/jquery.slim.min.js"></script>
 <script src="./../dest/tilt.jquery.js"></script>
 <script>
-    $('.js-logo-tilt span').tilt({
-        speed: 1000,
-        maxTilt: 20,
-        perspective: 50
-    });
-
     const tilt = $('.js-tilt').tilt({
+        speed: 400,
         maxTilt: 50,
         perspective: 300
     });
 
-    tilt.on('change', function (e, transforms) {
+    /*tilt.on('change', function (e, transforms) {
         console.log(transforms);
     });
 
@@ -44,7 +35,7 @@
 
     tilt.on('tilt.mouseEnter', function (e) {
         console.log(e);
-    });
+    });*/
 </script>
 </body>
 </html>

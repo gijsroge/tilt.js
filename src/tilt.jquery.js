@@ -2,18 +2,145 @@
     $.fn.tilt = function (options) {
 
         /**
+         * RequestAnimationFrame
+         */
+        const requestTick = function() {
+            if (this.ticking) return;
+            requestAnimationFrame(updateTransforms.bind(this));
+            this.ticking = true;
+        };
+
+        /**
+         * Bind mouse movement evens on instance
+         */
+        const bindEvents = function() {
+            $(this).on('mousemove', mouseMove);
+            $(this).on('mouseenter', mouseEnter);
+            if (this.settings.reset) $(this).on('mouseleave', mouseLeave);
+        };
+
+        /**
+         * Set transition only on mouse leave and mouse enter so it doesn't influence mouse move transforms
+         */
+        const setTransition = function() {
+            if (this.timeout !== undefined) clearTimeout(this.timeout);
+            $(this).css({'transition': `${this.settings.speed}ms ${this.settings.easing}`});
+            this.timeout = setTimeout(() => {
+                $(this).css({'transition': ''});
+            }, this.settings.speed);
+        };
+
+        /**
+         * When user mouse enters tilt element
+         */
+        const mouseEnter = function() {
+            this.ticking = false;
+            $(this).css({'will-change': 'transform'});
+            setTransition.call(this);
+
+            // Trigger change event
+            $(this).trigger("tilt.mouseEnter");
+        };
+
+        /**
+         * Return the x,y position of the muose on the tilt element
+         * @returns {{x: *, y: *}}
+         */
+        const getMousePositions = function() {
+            if (event === undefined) {
+                event = {
+                    pageX: $(this).offset().left + $(this).width() / 2,
+                    pageY: $(this).offset().top + $(this).height() / 2
+                };
+            }
+            return {x: event.pageX, y: event.pageY};
+        };
+
+        const mouseMove = function() {
+            this.mousePositions = getMousePositions();
+            requestTick.call(this);
+        };
+
+        const mouseLeave = function() {
+            setTransition.call(this);
+            this.reset = true;
+            requestTick.call(this);
+
+            // Trigger change event
+            $(this).trigger("tilt.mouseLeave");
+        };
+
+        /**
+         * Get tilt values
+         *
+         * @returns {{x: tilt value, y: tilt value}}
+         */
+        const getValues = function() {
+            const width = this.clientWidth;
+            const height = this.clientHeight;
+            const percentageX = (this.mousePositions.x - $(this).offset().left) / width;
+            const percentageY = (this.mousePositions.y - $(this).offset().top) / height;
+            // x or y position inside instance / width of instance = percentage of position inside instance * the max tilt value
+            const tiltX = ((this.settings.maxTilt / 2) - ((percentageX) * this.settings.maxTilt)).toFixed(2);
+            const tiltY = (((percentageY) * this.settings.maxTilt) - (this.settings.maxTilt / 2)).toFixed(2);
+            // Return x & y tilt values
+            return {tiltX, tiltY, 'percentageX': percentageX * 100, 'percentageY': percentageY * 100};
+        };
+
+        /**
+         * Update tilt transforms on mousemove
+         */
+        const updateTransforms = function() {
+            this.transforms = getValues.call(this);
+
+            if (this.reset) {
+                this.reset = false;
+                $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(0deg) rotateY(0deg)`);
+                return;
+            } else {
+                $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(${this.settings.axis === 'x' ? 0 : this.transforms.tiltY}deg) rotateY(${this.settings.axis === 'y' ? 0 : this.transforms.tiltX}deg) scale3d(${this.settings.scale},${this.settings.scale},${this.settings.scale})`);
+            }
+
+            // Trigger change event
+            $(this).trigger("change", [this.transforms]);
+
+            this.ticking = false;
+        };
+
+        /**
+         * Public methods
+         * @type {{getValues: (()), reset: (()), destroy: (())}}
+         */
+        this.methods = {
+            getValues: () => {
+                const results = [];
+                $(this).each(function () {
+                    this.mousePositions = getMousePositions();
+                    results.push(getValues.call(this));
+                });
+                return results;
+            },
+
+            reset: () => {
+                mouseLeave();
+                setTimeout(() => {
+                    reset = false;
+                }, this.settings.transition);
+            },
+
+            destroy: () => {
+                $(this).each(function () {
+                    $(this).css({'will-change': '', 'transform': ''});
+                    $(this).off('mousemove mouseenter mouseleave');
+                })
+            }
+        };
+
+        /**
          * Loop every instance
          */
         return this.each(function () {
 
-            /**
-             * RequestAnimationFrame
-             */
-            this.requestTick = () => {
-                if (this.ticking) return;
-                requestAnimationFrame(this.updateTransforms);
-                this.ticking = true;
-            };
 
             /**
              * Default settings merged with user settings
@@ -31,115 +158,9 @@
                 reset: $(this).is('[data-tilt-reset]') ? $(this).data('tilt-reset') : true,
             }, options);
 
-            /**
-             * Bind mouse movement evens on instance
-             */
-            this.bindEvents = () => {
-                $(this).on('mousemove', this.mouseMove);
-                $(this).on('mouseenter', this.mouseEnter);
-                if (this.settings.reset) $(this).on('mouseleave', this.mouseLeave);
-            };
-
-            /**
-             * Set transition only on mouse leave and mouse enter so it doesn't influence mouse move transforms
-             */
-            this.setTransition = () => {
-                if (this.timeout !== undefined) clearTimeout(this.timeout);
-                $(this).css({'transition': `${this.settings.speed}ms ${this.settings.easing}`});
-                this.timeout = setTimeout(() => {
-                    $(this).css({'transition': ''});
-                }, this.settings.speed);
-            };
-
-            this.mouseEnter = () => {
-                this.ticking = false;
-                $(this).css({'will-change': 'transform'});
-                this.setTransition();
-
-                // Trigger change event
-                $(this).trigger("tilt.mouseEnter");
-            };
-
-            this.getMousePositions = () => {
-                if (event === undefined) {
-                    event = {
-                        pageX: $(this).offset().left + $(this).width() / 2,
-                        pageY: $(this).offset().top + $(this).height() / 2
-                    };
-                }
-                return {x: event.pageX, y: event.pageY};
-            };
-
-            this.mouseMove = () => {
-                this.mousePositions = this.getMousePositions();
-                this.requestTick();
-            };
-
-            this.mouseLeave = () => {
-                this.setTransition();
-                this.reset = true;
-                this.requestTick();
-
-                // Trigger change event
-                $(this).trigger("tilt.mouseLeave");
-            };
-
-            this.api = {
-                getValues: () => {
-                    this.mousePositions = this.getMousePositions();
-                    return this.getValues();
-                },
-
-                reset: () => {
-                    this.mouseLeave();
-                    setTimeout(() => {this.reset = false;},this.settings.transition);
-                },
-
-                destroy: () => {
-                    $(this).css({'will-change': '','transform': ''});
-                    $(this).off('mousemove mouseenter mouseleave');
-                }
-            };
-
-            /**
-             * Get tilt values
-             *
-             * @returns {{x: tilt value, y: tilt value}}
-             */
-            this.getValues = () => {
-                const width = this.clientWidth;
-                const height = this.clientHeight;
-                const percentageX = (this.mousePositions.x - $(this).offset().left) / width;
-                const percentageY = (this.mousePositions.y - $(this).offset().top) / height;
-                // x or y position inside instance / width of instance = percentage of position inside instance * the max tilt value
-                const tiltX = ((this.settings.maxTilt / 2) - ((percentageX) * this.settings.maxTilt)).toFixed(2);
-                const tiltY = (((percentageY) * this.settings.maxTilt) - (this.settings.maxTilt / 2)).toFixed(2);
-                // Return x & y tilt values
-                return {tiltX, tiltY, 'percentageX': percentageX * 100, 'percentageY': percentageY * 100};
-            };
-
-            /**
-             * Update tilt transforms on mousemove
-             */
-            this.updateTransforms = () => {
-                this.transforms = this.getValues();
-
-                if (this.reset) {
-                    this.reset = false;
-                    $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(0deg) rotateY(0deg)`);
-                    return;
-                } else {
-                    $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(${this.settings.axis === 'x' ? 0 : this.transforms.tiltY}deg) rotateY(${this.settings.axis === 'y' ? 0 : this.transforms.tiltX}deg) scale3d(${this.settings.scale},${this.settings.scale},${this.settings.scale})`);
-                }
-
-                // Trigger change event
-                $(this).trigger("change", [this.transforms]);
-
-                this.ticking = false;
-            };
 
             this.init = () => {
-                this.bindEvents();
+                bindEvents.call(this);
             };
 
             // Init
