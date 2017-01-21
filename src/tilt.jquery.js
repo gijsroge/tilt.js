@@ -56,11 +56,17 @@
             return {x: event.pageX, y: event.pageY};
         };
 
+        /**
+         * When user mouse moves over the tilt element
+         */
         const mouseMove = function() {
             this.mousePositions = getMousePositions();
             requestTick.call(this);
         };
 
+        /**
+         * When user mouse leaves tilt element
+         */
         const mouseLeave = function() {
             setTransition.call(this);
             this.reset = true;
@@ -106,7 +112,6 @@
 
             this.ticking = false;
         };
-
         /**
          * Public methods
          * @type {{getValues: (()), reset: (()), destroy: (())}}
