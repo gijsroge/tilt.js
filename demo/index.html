@@ -9,23 +9,13 @@
 </head>
 <body>
 
-<aside>
-    <a href="/" class="logo">Tilt.js</a>
-</aside>
-<main>
-    <p>A tiny requestAnimationFrame powered 60+fps <br>
-        lightweight parallax tilt effect for jQuery.</p>
-    <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://gijsroge.github.io/priority-nav.js/" data-text="PriorityNav.js. A lightweight dependency free javascript plugin for smart responsive navigations." data-via="GijsRoge">Tweet</a>
-    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
-    <a class="github-button" href="https://github.com/gijsroge/priority-navigation" data-count-href="/gijsroge/priority-navigation/stargazers" data-count-api="/repos/gijsroge/priority-navigation#stargazers_count" data-count-aria-label="# stargazers on GitHub" aria-label="Star gijsroge/priority-navigation on GitHub">Star</a>
-    <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
-
-    <article>
-        <strong>Default without options</strong>
-        <code>$('.js-tilt').tilt()</code>
-        <div class="js-tilt"></div>
-    </article>
-</main>
+<header>
+    <h1><span class="js-tilt">tilt</span><span class="js-tilt">.js</span></h1>
+    <p>
+        A tiny requestAnimationFrame powered 60+fps lightweight parallax tilt effect for jQuery.
+    </p>
+    <div class="c-test js-tilt"><div class="c-test-inner"></div></div>
+</header>
 <script src="./../node_modules/jquery/dist/jquery.slim.min.js"></script>
 <script src="./../dest/tilt.jquery.js"></script>
 <script>
@@ -36,16 +26,16 @@
     });
 
     /*tilt.on('change', function (e, transforms) {
-     console.log(transforms);
-     });
+        console.log(transforms);
+    });
 
-     tilt.on('tilt.mouseLeave', function (e) {
-     console.log(e);
-     });
+    tilt.on('tilt.mouseLeave', function (e) {
+        console.log(e);
+    });
 
-     tilt.on('tilt.mouseEnter', function (e) {
-     console.log(e);
-     });*/
+    tilt.on('tilt.mouseEnter', function (e) {
+        console.log(e);
+    });*/
 </script>
 </body>
 </html>

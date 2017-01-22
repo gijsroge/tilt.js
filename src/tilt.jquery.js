@@ -49,8 +49,8 @@
         const getMousePositions = function() {
             if (event === undefined) {
                 event = {
-                    pageX: $(this).offset().left + $(this).width() / 2,
-                    pageY: $(this).offset().top + $(this).height() / 2
+                    pageX: $(this).offset().left + $(this).outerWidth() / 2,
+                    pageY: $(this).offset().top + $(this).outerHeight() / 2
                 };
             }
             return {x: event.pageX, y: event.pageY};
@@ -114,38 +114,38 @@
         };
 
         /**
+         * Public methods
+         */
+        $.fn.tilt.destroy = () => {
+            $(this).css({'will-change': '', 'transform': ''});
+            $(this).off('mousemove mouseenter mouseleave');
+        };
+
+        $.fn.tilt.getValues = () => {
+            const results = [];
+            $(this).each(function () {
+                this.mousePositions = getMousePositions.call(this);
+                results.push(getValues.call(this));
+            });
+            return results;
+        };
+
+        $.fn.tilt.reset = () => {
+            $(this).each(function () {
+                this.mousePositions = getMousePositions.call(this);
+                this.settings = $(this).data('settings');
+                mouseLeave.call(this);
+                setTimeout(() => {
+                    this.reset = false;
+                }, this.settings.transition);
+            })
+
+        };
+
+        /**
          * Loop every instance
          */
         return this.each(function () {
-
-            /**
-             * Public methods
-             * @type {{getValues: (()), reset: (()), destroy: (())}}
-             */
-            this.methods = {
-                getValues: () => {
-                    const results = [];
-                    $(this).each(function () {
-                        this.mousePositions = getMousePositions();
-                        results.push(getValues.call(this));
-                    });
-                    return results;
-                },
-
-                reset: () => {
-                    mouseLeave();
-                    setTimeout(() => {
-                        reset = false;
-                    }, this.settings.transition);
-                },
-
-                destroy: () => {
-                    $(this).each(function () {
-                        $(this).css({'will-change': '', 'transform': ''});
-                        $(this).off('mousemove mouseenter mouseleave');
-                    })
-                }
-            };
 
             /**
              * Default settings merged with user settings
@@ -165,6 +165,8 @@
 
 
             this.init = () => {
+                // Store settings
+                $(this).data('settings', this.settings);
                 bindEvents.call(this);
             };
 

@@ -54,8 +54,8 @@
         var getMousePositions = function getMousePositions() {
             if (event === undefined) {
                 event = {
-                    pageX: $(this).offset().left + $(this).width() / 2,
-                    pageY: $(this).offset().top + $(this).height() / 2
+                    pageX: $(this).offset().left + $(this).outerWidth() / 2,
+                    pageY: $(this).offset().top + $(this).outerHeight() / 2
                 };
             }
             return { x: event.pageX, y: event.pageY };
@@ -86,7 +86,7 @@
          *
          * @returns {{x: tilt value, y: tilt value}}
          */
-        var _getValues = function _getValues() {
+        var getValues = function getValues() {
             var width = this.clientWidth;
             var height = this.clientHeight;
             var percentageX = (this.mousePositions.x - $(this).offset().left) / width;
@@ -102,7 +102,7 @@
          * Update tilt transforms on mousemove
          */
         var updateTransforms = function updateTransforms() {
-            this.transforms = _getValues.call(this);
+            this.transforms = getValues.call(this);
 
             if (this.reset) {
                 this.reset = false;
@@ -117,50 +117,42 @@
 
             this.ticking = false;
         };
+
         /**
          * Public methods
-         * @type {{getValues: (()), reset: (()), destroy: (())}}
          */
-        this.methods = {
-            getValues: function getValues() {
-                var results = [];
-                $(_this2).each(function () {
-                    this.mousePositions = getMousePositions();
-                    results.push(_getValues.call(this));
-                });
-                return results;
-            },
+        $.fn.tilt.destroy = function () {
+            $(_this2).css({ 'will-change': '', 'transform': '' });
+            $(_this2).off('mousemove mouseenter mouseleave');
+        };
 
-            reset: function (_reset) {
-                function reset() {
-                    return _reset.apply(this, arguments);
-                }
+        $.fn.tilt.getValues = function () {
+            var results = [];
+            $(_this2).each(function () {
+                this.mousePositions = getMousePositions.call(this);
+                results.push(getValues.call(this));
+            });
+            return results;
+        };
 
-                reset.toString = function () {
-                    return _reset.toString();
-                };
+        $.fn.tilt.reset = function () {
+            $(_this2).each(function () {
+                var _this3 = this;
 
-                return reset;
-            }(function () {
-                mouseLeave();
+                this.mousePositions = getMousePositions.call(this);
+                this.settings = $(this).data('settings');
+                mouseLeave.call(this);
                 setTimeout(function () {
-                    reset = false;
-                }, _this2.settings.transition);
-            }),
-
-            destroy: function destroy() {
-                $(_this2).each(function () {
-                    $(this).css({ 'will-change': '', 'transform': '' });
-                    $(this).off('mousemove mouseenter mouseleave');
-                });
-            }
+                    _this3.reset = false;
+                }, this.settings.transition);
+            });
         };
 
         /**
          * Loop every instance
          */
         return this.each(function () {
-            var _this3 = this;
+            var _this4 = this;
 
             /**
              * Default settings merged with user settings
@@ -179,7 +171,9 @@
             }, options);
 
             this.init = function () {
-                bindEvents.call(_this3);
+                // Store settings
+                $(_this4).data('settings', _this4.settings);
+                bindEvents.call(_this4);
             };
 
             // Init
