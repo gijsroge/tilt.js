@@ -116,12 +116,14 @@
         /**
          * Public methods
          */
-        $.fn.tilt.destroy = () => {
-            $(this).css({'will-change': '', 'transform': ''});
-            $(this).off('mousemove mouseenter mouseleave');
+        $.fn.tilt.destroy = function() {
+            $(this).each(function () {
+                $(this).css({'will-change': '', 'transform': ''});
+                $(this).off('mousemove mouseenter mouseleave');
+            });
         };
 
-        $.fn.tilt.getValues = () => {
+        $.fn.tilt.getValues = function() {
             const results = [];
             $(this).each(function () {
                 this.mousePositions = getMousePositions.call(this);
@@ -130,7 +132,7 @@
             return results;
         };
 
-        $.fn.tilt.reset = () => {
+        $.fn.tilt.reset = function() {
             $(this).each(function () {
                 this.mousePositions = getMousePositions.call(this);
                 this.settings = $(this).data('settings');

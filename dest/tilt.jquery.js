@@ -2,7 +2,6 @@
 
 (function ($) {
     $.fn.tilt = function (options) {
-        var _this2 = this;
 
         /**
          * RequestAnimationFrame
@@ -122,13 +121,15 @@
          * Public methods
          */
         $.fn.tilt.destroy = function () {
-            $(_this2).css({ 'will-change': '', 'transform': '' });
-            $(_this2).off('mousemove mouseenter mouseleave');
+            $(this).each(function () {
+                $(this).css({ 'will-change': '', 'transform': '' });
+                $(this).off('mousemove mouseenter mouseleave');
+            });
         };
 
         $.fn.tilt.getValues = function () {
             var results = [];
-            $(_this2).each(function () {
+            $(this).each(function () {
                 this.mousePositions = getMousePositions.call(this);
                 results.push(getValues.call(this));
             });
@@ -136,14 +137,14 @@
         };
 
         $.fn.tilt.reset = function () {
-            $(_this2).each(function () {
-                var _this3 = this;
+            $(this).each(function () {
+                var _this2 = this;
 
                 this.mousePositions = getMousePositions.call(this);
                 this.settings = $(this).data('settings');
                 mouseLeave.call(this);
                 setTimeout(function () {
-                    _this3.reset = false;
+                    _this2.reset = false;
                 }, this.settings.transition);
             });
         };
@@ -152,7 +153,7 @@
          * Loop every instance
          */
         return this.each(function () {
-            var _this4 = this;
+            var _this3 = this;
 
             /**
              * Default settings merged with user settings
@@ -172,8 +173,8 @@
 
             this.init = function () {
                 // Store settings
-                $(_this4).data('settings', _this4.settings);
-                bindEvents.call(_this4);
+                $(_this3).data('settings', _this3.settings);
+                bindEvents.call(_this3);
             };
 
             // Init
