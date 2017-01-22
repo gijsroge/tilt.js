@@ -176,4 +176,10 @@
 
         });
     };
+
+    /**
+     * Auto load
+     */
+    $('[data-tilt]').tilt();
+
 }(jQuery));
