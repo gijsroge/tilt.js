@@ -10,7 +10,7 @@ QUnit.test('global test', function (assert) {
     assert.ok(tilt, 'tilt function works')
 });
 
-QUnit.test('getvalue api test', function (assert) {
+QUnit.test('getvalue method', function (assert) {
     const tilt = $(testElement).tilt();
-    assert.ok(tilt[0].api.getValues().tiltX === '0.00', 'tiltX set correctly')
+    assert.ok(tilt.tilt.getValues.call(tilt)[0].tiltX === '0.00', 'tiltX set correctly')
 });

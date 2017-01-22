@@ -140,8 +140,7 @@
                 setTimeout(() => {
                     this.reset = false;
                 }, this.settings.transition);
-            })
-
+            });
         };
 
         /**
