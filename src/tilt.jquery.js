@@ -33,7 +33,7 @@
         /**
          * When user mouse enters tilt element
          */
-        const mouseEnter = function() {
+        const mouseEnter = function(event) {
             this.ticking = false;
             $(this).css({'will-change': 'transform'});
             setTransition.call(this);
@@ -46,8 +46,8 @@
          * Return the x,y position of the muose on the tilt element
          * @returns {{x: *, y: *}}
          */
-        const getMousePositions = function() {
-            if (event === undefined) {
+        const getMousePositions = function(event) {
+            if (typeof(event) === "undefined") {
                 event = {
                     pageX: $(this).offset().left + $(this).outerWidth() / 2,
                     pageY: $(this).offset().top + $(this).outerHeight() / 2
@@ -59,8 +59,8 @@
         /**
          * When user mouse moves over the tilt element
          */
-        const mouseMove = function() {
-            this.mousePositions = getMousePositions();
+        const mouseMove = function(event) {
+            this.mousePositions = getMousePositions(event);
             requestTick.call(this);
         };
 
