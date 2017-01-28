@@ -25,11 +25,7 @@
 <script src="./../node_modules/jquery/dist/jquery.slim.min.js"></script>
 <script src="./../dest/tilt.jquery.js"></script>
 <script>
-    const tilt = $('.js-tilt').tilt({
-        speed: 400,
-        maxTilt: 20,
-        perspective: 300
-    });
+    const tilt = $('.js-tilt').tilt();
 
     $('.js-destroy').on('click', function () {
         const element = $(this).closest('.js-parent').find('.js-tilt');
