@@ -2,31 +2,31 @@ body {
   font-family: 'Fira Sans', sans-serif;
   display: flex;
   flex-direction: column;
-  
+
   justify-content: center;
   align-items: center;
   max-width: 1200px;
-  min-height:100vh;
-  padding:0;
-  margin:0 auto;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0 auto;
 }
 
-header{
+header {
   font-size: 200%;
-  span{
+  span {
     display: inline-block;
     box-shadow: 0 0 50px 0 rgba(black, .05);
     padding: .25em;
-    &:nth-child(even){
+    &:nth-child(even) {
       background-color: white;
     }
-    &:nth-child(odd){
+    &:nth-child(odd) {
       background-color: rgba(black, .05);
     }
   }
 }
 
-.c-test{
+.c-test {
   position: relative;
   width: 200px;
   height: 200px;
@@ -37,11 +37,7 @@ header{
   background-color: lightgrey;
   transform-style: preserve-3d;
 
-
-  &-inner{
-    &:hover{
-      transform: translateZ(100px) scale(.7);
-    }
+  &-inner {
     $gutter: 50px;
     will-change: transform;
     transition: .15s;
@@ -49,6 +45,23 @@ header{
     width: calc(100% - #{$gutter});
     height: calc(100% - #{$gutter});
     background-color: red;
-    transform: translateZ(50px) scale(0.5);
+    transform: translateZ(100px) scale(0.5);
+  }
+
+  &-glare {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    &-inner {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      left: 0;
+      will-change: transform;
+    }
   }
 }

@@ -25,8 +25,10 @@
         const setTransition = function() {
             if (this.timeout !== undefined) clearTimeout(this.timeout);
             $(this).css({'transition': `${this.settings.speed}ms ${this.settings.easing}`});
+            if(this.settings.glare) this.glareElement.css({'transition': `opacity ${this.settings.speed}ms ${this.settings.easing}`});
             this.timeout = setTimeout(() => {
                 $(this).css({'transition': ''});
+                if(this.settings.glare) this.glareElement.css({'transition': ''});
             }, this.settings.speed);
         };
 
@@ -82,15 +84,19 @@
          * @returns {{x: tilt value, y: tilt value}}
          */
         const getValues = function() {
-            const width = this.clientWidth;
-            const height = this.clientHeight;
-            const percentageX = (this.mousePositions.x - $(this).offset().left) / width;
-            const percentageY = (this.mousePositions.y - $(this).offset().top) / height;
+            const width = $(this).width();
+            const height = $(this).height();
+            const left = $(this).offset().left;
+            const top = $(this).offset().top;
+            const percentageX = (this.mousePositions.x - left) / width;
+            const percentageY = (this.mousePositions.y - top) / height;
             // x or y position inside instance / width of instance = percentage of position inside instance * the max tilt value
             const tiltX = ((this.settings.maxTilt / 2) - ((percentageX) * this.settings.maxTilt)).toFixed(2);
             const tiltY = (((percentageY) * this.settings.maxTilt) - (this.settings.maxTilt / 2)).toFixed(2);
+            // angle
+            const angle = Math.atan2(this.mousePositions.x - (left+width/2),- (this.mousePositions.y - (top+height/2)) )*(180/Math.PI);
             // Return x & y tilt values
-            return {tiltX, tiltY, 'percentageX': percentageX * 100, 'percentageY': percentageY * 100};
+            return {tiltX, tiltY, 'percentageX': percentageX * 100, 'percentageY': percentageY * 100, angle};
         };
 
         /**
@@ -102,15 +108,66 @@
             if (this.reset) {
                 this.reset = false;
                 $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(0deg) rotateY(0deg)`);
+
+                // Rotate glare if enabled
+                if (this.settings.glare){
+                    this.glareElement.css('transform', `rotate(180deg) scale(1.5)`);
+                    this.glareElement.css('opacity', `${this.settings.maxGlare/2}`);
+                }
+
                 return;
             } else {
                 $(this).css('transform', `perspective(${this.settings.perspective}px) rotateX(${this.settings.axis === 'x' ? 0 : this.transforms.tiltY}deg) rotateY(${this.settings.axis === 'y' ? 0 : this.transforms.tiltX}deg) scale3d(${this.settings.scale},${this.settings.scale},${this.settings.scale})`);
+
+                // Rotate glare if enabled
+                if (this.settings.glare){
+                    this.glareElement.css('transform', `rotate(${this.transforms.angle}deg) scale(1.5)`);
+                    this.glareElement.css('opacity', `${this.transforms.percentageY * this.settings.maxGlare / 100}`);
+                }
             }
 
             // Trigger change event
             $(this).trigger("change", [this.transforms]);
 
             this.ticking = false;
+        };
+
+        /**
+         * Prepare elements
+         */
+        const prepareGlare = function () {
+
+            // If option pre-render is enabled we assume all html/css is present for an optimal glare effect.
+            if(this.settings.prerender) return;
+
+            // Create glare element
+            $(this).append(`<div class="js-tilt-glare"><div class="js-tilt-glare-inner"></div></div>`);
+
+            // Store glare selector if glare is enabled
+            this.glareElementWrapper = $(this).find(".js-tilt-glare");
+            this.glareElement = $(this).find(".js-tilt-glare-inner");
+
+            // Abstracted re-usable glare styles
+            const stretch = {
+                'position': 'absolute',
+                'top': '0',
+                'left': '0',
+                'width': '100%',
+                'height': '100%',
+            };
+
+            // Style glare wrapper
+            this.glareElementWrapper.css(stretch).css({
+                'overflow': 'hidden',
+            });
+
+            // Style glare element
+            this.glareElement.css(stretch).css({
+                'background-image': `linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)`,
+                'opacity': `${this.settings.maxGlare / 2}`,
+                'transform': `rotate(180deg) scale(1.5)`
+            });
+
         };
 
         /**
@@ -162,12 +219,19 @@
                 transition: $(this).is('[data-tilt-transition]') ? $(this).data('tilt-transition') : true,
                 axis: $(this).is('[data-tilt-axis]') ? $(this).data('tilt-axis') : null,
                 reset: $(this).is('[data-tilt-reset]') ? $(this).data('tilt-reset') : true,
+                glare: $(this).is('[data-tilt-glare]') ? $(this).data('tilt-glare') : false,
+                maxGlare: $(this).is('[data-tilt-maxGlare]') ? $(this).data('tilt-maxGlare') : 1,
             }, options);
 
 
             this.init = () => {
                 // Store settings
                 $(this).data('settings', this.settings);
+
+                // Prepare element
+                if(this.settings.glare) prepareGlare.call(this);
+
+                // Bind events
                 bindEvents.call(this);
             };
 

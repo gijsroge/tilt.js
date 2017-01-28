@@ -10,12 +10,13 @@
 <body>
 
 <header>
-    <h1><span class="js-tilt">tilt</span><span class="js-tilt">.js</span></h1>
+    <h1><span class="js-tilt" data-tilt-glare="true">tilt</span><span class="js-tilt" data-tilt-glare="true">.js</span></h1>
     <p>
         A tiny requestAnimationFrame powered 60+fps lightweight parallax tilt effect for jQuery.
     </p>
     <div class="js-parent">
-        <div class="c-test js-tilt"><div class="c-test-inner"></div></div>
+        <div class="c-test js-tilt" data-tilt-glare="true">
+        </div>
         <button class="js-destroy">destroy</button>
         <button class="js-getvalue">getvalue</button>
         <button class="js-reset">reset</button>
@@ -26,7 +27,7 @@
 <script>
     const tilt = $('.js-tilt').tilt({
         speed: 400,
-        maxTilt: 50,
+        maxTilt: 20,
         perspective: 300
     });
 
@@ -47,16 +48,16 @@
     });
 
     /*tilt.on('change', function (e, transforms) {
-        console.log(transforms);
-    });
+     console.log(transforms);
+     });
 
-    tilt.on('tilt.mouseLeave', function (e) {
-        console.log(e);
-    });
+     tilt.on('tilt.mouseLeave', function (e) {
+     console.log(e);
+     });
 
-    tilt.on('tilt.mouseEnter', function (e) {
-        console.log(e);
-    });*/
+     tilt.on('tilt.mouseEnter', function (e) {
+     console.log(e);
+     });*/
 </script>
 </body>
 </html>
