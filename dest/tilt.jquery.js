@@ -169,7 +169,7 @@
             this.glareElement.css(stretch).css({
                 'background-image': 'linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)',
                 'opacity': '' + this.settings.maxGlare / 2,
-                'transform': 'rotate(180deg) scale(1.5)'
+                'transform': 'rotate(180deg) scale(1.75)'
             });
         };
 
