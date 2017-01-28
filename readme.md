@@ -20,6 +20,7 @@ A tiny requestAnimationFrame powered 60+fps lightweight parallax tilt effect for
 ### Options
 ```js
 maxTilt:        20,
+reverseTilt:    false,  // reverses tilt direction
 perspective:    1000,   // Transform perspective, the lower the more extreme the tilt gets.
 easing:         "cubic-bezier(.03,.98,.52,.99)",    // Easing on enter/exit.
 scale:          1,      // 2 = 200%, 1.5 = 150%, etc..
