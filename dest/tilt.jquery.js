@@ -90,9 +90,10 @@
             var height = this.clientHeight;
             var percentageX = (this.mousePositions.x - $(this).offset().left) / width;
             var percentageY = (this.mousePositions.y - $(this).offset().top) / height;
+            var tiltDirection = this.settings.reverseTilt ? -1 : 1;
             // x or y position inside instance / width of instance = percentage of position inside instance * the max tilt value
-            var tiltX = (this.settings.maxTilt / 2 - percentageX * this.settings.maxTilt).toFixed(2);
-            var tiltY = (percentageY * this.settings.maxTilt - this.settings.maxTilt / 2).toFixed(2);
+            var tiltX = (tiltDirection * (this.settings.maxTilt / 2 - percentageX * this.settings.maxTilt)).toFixed(2);
+            var tiltY = (tiltDirection * (percentageY * this.settings.maxTilt - this.settings.maxTilt / 2)).toFixed(2);
             // Return x & y tilt values
             return { tiltX: tiltX, tiltY: tiltY, 'percentageX': percentageX * 100, 'percentageY': percentageY * 100 };
         };
@@ -162,6 +163,7 @@
              */
             this.settings = $.extend({
                 maxTilt: $(this).is('[data-tilt-max]') ? $(this).data('tilt-max') : 20,
+                reverseTilt: $(this).is('[data-tilt-reverse]') ? $(this).data('tilt-reverse') : false,
                 perspective: $(this).is('[data-tilt-perspective]') ? $(this).data('tilt-perspective') : 1000,
                 easing: $(this).is('[data-tilt-easing]') ? $(this).data('tilt-easing') : 'cubic-bezier(.03,.98,.52,.99)',
                 scale: $(this).is('[data-tilt-scale]') ? $(this).data('tilt-scale') : '1',
