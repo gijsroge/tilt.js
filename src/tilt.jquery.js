@@ -111,7 +111,7 @@
 
                 // Rotate glare if enabled
                 if (this.settings.glare){
-                    this.glareElement.css('transform', `rotate(180deg) scale(1.5)`);
+                    this.glareElement.css('transform', `rotate(180deg) scale(1.75)`);
                     this.glareElement.css('opacity', `${this.settings.maxGlare/4}`);
                 }
 
