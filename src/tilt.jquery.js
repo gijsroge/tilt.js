@@ -112,7 +112,7 @@
                 // Rotate glare if enabled
                 if (this.settings.glare){
                     this.glareElement.css('transform', `rotate(180deg) scale(1.5)`);
-                    this.glareElement.css('opacity', `${this.settings.maxGlare/2}`);
+                    this.glareElement.css('opacity', `${this.settings.maxGlare/4}`);
                 }
 
                 return;
@@ -220,7 +220,7 @@
                 axis: $(this).is('[data-tilt-axis]') ? $(this).data('tilt-axis') : null,
                 reset: $(this).is('[data-tilt-reset]') ? $(this).data('tilt-reset') : true,
                 glare: $(this).is('[data-tilt-glare]') ? $(this).data('tilt-glare') : false,
-                maxGlare: $(this).is('[data-tilt-maxGlare]') ? $(this).data('tilt-maxGlare') : 1,
+                maxGlare: $(this).is('[data-tilt-maxglare]') ? $(this).data('tilt-maxglare') : 1,
             }, options);
 
 
