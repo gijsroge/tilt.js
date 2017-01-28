@@ -54,3 +54,6 @@ tilt.tilt.reset.call(tilt);
 ### Install
 - **yarn:** `yarn add tilt.js`
 - **npm:** `npm install --save tilt.js`
+
+### Alternatives
+- **Vanilla JS version:** https://github.com/micku7zu/vanillaTilt.js
