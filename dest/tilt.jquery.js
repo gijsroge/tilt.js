@@ -178,6 +178,7 @@
          */
         $.fn.tilt.destroy = function () {
             $(this).each(function () {
+                $(this).find('.js-tilt-glare').remove();
                 $(this).css({ 'will-change': '', 'transform': '' });
                 $(this).off('mousemove mouseenter mouseleave');
             });
