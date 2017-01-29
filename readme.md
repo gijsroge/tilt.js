@@ -60,4 +60,4 @@ tilt.tilt.reset.call(tilt);
 - **npm:** `npm install --save tilt.js`
 
 ### Alternatives
-- **Vanilla JS version:** https://github.com/micku7zu/vanillaTilt.js
+- **Vanilla JS version:** https://github.com/micku7zu/vanilla-tilt.js
