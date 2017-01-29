@@ -1,4 +1,4 @@
-/* SCSS task */
+/* JS task */
 
 /**
  * plugins
