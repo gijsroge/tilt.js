@@ -8,7 +8,6 @@ var sourcemaps = require("gulp-sourcemaps");
 var plumber = require('gulp-plumber');
 var babel = require("gulp-babel");
 var uglify = require('gulp-uglify');
-var pump = require('pump');
 var rename = require('gulp-rename');
 
 /**
@@ -29,10 +28,8 @@ gulp.task("transpile", function () {
 });
 
 gulp.task('compress', function (cb) {
-
-            return gulp.src(config.js.dest + 'tilt.jquery.js')
-                .pipe(uglify())
-                .pipe(rename({suffix: '.min'}))
-                .pipe(gulp.dest(config.js.dest))
-
+    return gulp.src(config.js.dest + 'tilt.jquery.js')
+        .pipe(uglify())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(gulp.dest(config.js.dest))
 });
