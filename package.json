@@ -1,13 +1,13 @@
 {
   "name": "tilt.js",
-  "version": "1.1.11",
+  "version": "1.1.12",
   "description": "A tiny requestAnimationFrame powered 60+fps lightweight parallax tilt effect for jQuery.",
   "main": "./src/tilt.jquery.js",
   "scripts": {
     "test": "node ./node_modules/jshint/bin/jshint src/tilt.jquery.js && gulp test --verbose --force"
   },
   "files": [
-    "dest/"
+    "*/**"
   ],
   "repository": {
     "type": "git",
