@@ -136,15 +136,19 @@
          * Prepare elements
          */
         const prepareGlare = function () {
+            const glarePrerender = this.settings.glarePrerender;
 
             // If option pre-render is enabled we assume all html/css is present for an optimal glare effect.
-            if (!this.settings.glarePrerender)
+            if (!glarePrerender)
                 // Create glare element
                 $(this).append('<div class="js-tilt-glare"><div class="js-tilt-glare-inner"></div></div>');
 
             // Store glare selector if glare is enabled
             this.glareElementWrapper = $(this).find(".js-tilt-glare");
             this.glareElement = $(this).find(".js-tilt-glare-inner");
+            
+            // Remember? We assume all css is already set, so just return
+            if (glarePrerender) return;
 
             // Abstracted re-usable glare styles
             const stretch = {
