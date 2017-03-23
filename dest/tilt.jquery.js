@@ -49,7 +49,7 @@
         };
 
         /**
-         * Return the x,y position of the muose on the tilt element
+         * Return the x,y position of the mouse on the tilt element
          * @returns {{x: *, y: *}}
          */
         var getMousePositions = function getMousePositions(event) {
@@ -88,8 +88,8 @@
          * @returns {{x: tilt value, y: tilt value}}
          */
         var getValues = function getValues() {
-            var width = $(this).width();
-            var height = $(this).height();
+            var width = $(this).outerWidth();
+            var height = $(this).outerHeight();
             var left = $(this).offset().left;
             var top = $(this).offset().top;
             var percentageX = (this.mousePositions.x - left) / width;
