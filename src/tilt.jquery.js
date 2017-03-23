@@ -111,7 +111,7 @@
 
                 // Rotate glare if enabled
                 if (this.settings.glare){
-                    this.glareElement.css('transform', `rotate(180deg) scale(1.75)`);
+                    this.glareElement.css('transform', `rotate(180deg) translate(-50%, -50%)`);
                     this.glareElement.css('opacity', `${this.settings.maxGlare/4}`);
                 }
 
@@ -121,7 +121,7 @@
 
                 // Rotate glare if enabled
                 if (this.settings.glare){
-                    this.glareElement.css('transform', `rotate(${this.transforms.angle}deg) scale(1.75)`);
+                    this.glareElement.css('transform', `rotate(${this.transforms.angle}deg) translate(-50%, -50%)`);
                     this.glareElement.css('opacity', `${this.transforms.percentageY * this.settings.maxGlare / 100}`);
                 }
             }
@@ -140,13 +140,13 @@
 
             // If option pre-render is enabled we assume all html/css is present for an optimal glare effect.
             if (!glarePrerender)
-                // Create glare element
+            // Create glare element
                 $(this).append('<div class="js-tilt-glare"><div class="js-tilt-glare-inner"></div></div>');
 
             // Store glare selector if glare is enabled
             this.glareElementWrapper = $(this).find(".js-tilt-glare");
             this.glareElement = $(this).find(".js-tilt-glare-inner");
-            
+
             // Remember? We assume all css is already set, so just return
             if (glarePrerender) return;
 
@@ -165,10 +165,17 @@
             });
 
             // Style glare element
-            this.glareElement.css(stretch).css({
+            this.glareElement.css({
+                'position': 'absolute',
+                'top': '50%',
+                'left': '50%',
+                'pointer-events': 'none',
                 'background-image': `linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)`,
                 'opacity': `${this.settings.maxGlare / 2}`,
-                'transform': `rotate(180deg) scale(1.75)`
+                'width': `${$(this).outerWidth()*2}`,
+                'height': `${$(this).outerWidth()*2}`,
+                'transform': 'rotate(180deg) translate(-50%, -50%)',
+                'transform-origin': '0% 0%',
             });
 
         };
