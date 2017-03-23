@@ -116,7 +116,7 @@
                 // Rotate glare if enabled
                 if (this.settings.glare) {
                     this.glareElement.css('transform', 'rotate(180deg) translate(-50%, -50%)');
-                    this.glareElement.css('opacity', '' + this.settings.maxGlare / 4);
+                    this.glareElement.css('opacity', '0');
                 }
 
                 return;
@@ -179,7 +179,8 @@
                 'width': '' + $(this).outerWidth() * 2,
                 'height': '' + $(this).outerWidth() * 2,
                 'transform': 'rotate(180deg) translate(-50%, -50%)',
-                'transform-origin': '0% 0%'
+                'transform-origin': '0% 0%',
+                'opacity': '0'
             });
         };
 
