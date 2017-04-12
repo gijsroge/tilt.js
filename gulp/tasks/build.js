@@ -9,5 +9,5 @@ var gulp = require('gulp');
  * Tasks
  */
 gulp.task('build', [
-  'scss', 'transpile', 'compress'
+  'scss', 'transpile', 'compress', 'test'
 ]);

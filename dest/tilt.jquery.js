@@ -175,7 +175,6 @@
                 'left': '50%',
                 'pointer-events': 'none',
                 'background-image': 'linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)',
-                'opacity': '' + this.settings.maxGlare / 2,
                 'width': '' + $(this).outerWidth() * 2,
                 'height': '' + $(this).outerWidth() * 2,
                 'transform': 'rotate(180deg) translate(-50%, -50%)',
