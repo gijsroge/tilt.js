@@ -63,4 +63,5 @@ tilt.tilt.reset.call(tilt);
 - https://unpkg.com/tilt.js@1.1.18/dest/tilt.jquery.min.js
 
 ### Alternatives
-- **Vanilla JS version:** https://github.com/micku7zu/vanilla-tilt.js
+- **Vanilla JS:** https://github.com/micku7zu/vanilla-tilt.js
+- **React:** https://github.com/jonathandion/react-tilt
