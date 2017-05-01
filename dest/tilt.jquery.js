@@ -19,6 +19,7 @@
             $(this).on('mousemove', mouseMove);
             $(this).on('mouseenter', mouseEnter);
             if (this.settings.reset) $(this).on('mouseleave', mouseLeave);
+            if (this.settings.glare) $(window).on('resize', updateGlareSize);
         };
 
         /**
@@ -175,11 +176,19 @@
                 'left': '50%',
                 'pointer-events': 'none',
                 'background-image': 'linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)',
+                'opacity': '' + this.settings.maxGlare / 2,
                 'width': '' + $(this).outerWidth() * 2,
                 'height': '' + $(this).outerWidth() * 2,
                 'transform': 'rotate(180deg) translate(-50%, -50%)',
                 'transform-origin': '0% 0%',
                 'opacity': '0'
+            });
+        };
+
+        var updateGlareSize = function updateGlareSize() {
+            this.glareElement.css({
+                'width': '' + $(this).outerWidth() * 2,
+                'height': '' + $(this).outerWidth() * 2
             });
         };
 

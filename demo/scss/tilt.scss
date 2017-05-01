@@ -1,67 +1,31 @@
-body {
-  font-family: 'Fira Sans', sans-serif;
-  display: flex;
-  flex-direction: column;
-
-  justify-content: center;
-  align-items: center;
-  max-width: 1200px;
-  min-height: 100vh;
-  padding: 0;
-  margin: 0 auto;
+html, body {
+  height: 100%;
 }
 
-header {
-  font-size: 200%;
-  span {
-    display: inline-block;
-    box-shadow: 0 0 50px 0 rgba(black, .05);
-    padding: .25em;
-    &:nth-child(even) {
-      background-color: white;
-    }
-    &:nth-child(odd) {
-      background-color: rgba(black, .05);
-    }
-  }
+body{
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.c-test {
-  position: relative;
-  width: 200px;
-  height: 200px;
-  margin: 0 auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: lightgrey;
+.c-example__tilt {
+  width: 50vw;
+  height: 50vh;
+  display: block;
+  background-color: #9e21ff;
+  background-image: linear-gradient(135deg, #ed21ff 0%, #9e21ff 100%, #9e21ff 100%);
+  box-shadow: 0 3px 47px rgba(0, 0, 0, 0.2);
   transform-style: preserve-3d;
+  transform: perspective(300px);
+}
 
-  &-inner {
-    $gutter: 50px;
-    will-change: transform;
-    transition: .15s;
-    position: absolute;
-    width: calc(100% - #{$gutter});
-    height: calc(100% - #{$gutter});
-    background-color: red;
-    transform: translateZ(100px) scale(0.5);
-  }
-
-  &-glare {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    &-inner {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 100%;
-      left: 0;
-      will-change: transform;
-    }
-  }
+.c-example__tilt-inner {
+  transform: translateZ(50px) translateY(-50%) translateX(-50%);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50px;
+  height: 50px;
+  background-color: white;
+  box-shadow: 0 0 50px 0 rgba(51, 51, 51, 0.3);
 }

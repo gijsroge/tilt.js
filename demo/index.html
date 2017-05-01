@@ -10,18 +10,9 @@
 <body>
 
 <header>
-    <h1><span class="js-tilt" data-tilt-glare="true" data-tilt-maxGlare=".1">tilt</span><span class="js-tilt" data-tilt-glare="true">.js</span></h1>
-    <p>
-        A tiny requestAnimationFrame powered 60+fps lightweight parallax tilt effect for jQuery.
-    </p>
-    <div class="js-parent">
-        <div class="c-test js-tilt" data-tilt-maxglare=".5" data-tilt-glare="true">
-        </div>
-        <button class="js-destroy">destroy</button>
-        <button class="js-getvalue">getvalue</button>
-        <button class="js-reset">reset</button>
+    <div class="[ c-example__tilt ] js-tilt" data-tilt-glare="true" data-tilt-perspective="1000" data-tilt-scale="1.3" data-tilt-speed="400" data-tilt-max="25">
+        <div class="c-example__tilt-inner"></div>
     </div>
-</header>
 <script src="./../node_modules/jquery/dist/jquery.slim.min.js"></script>
 <script src="./../dest/tilt.jquery.js"></script>
 <script>

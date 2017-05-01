@@ -17,6 +17,7 @@
             $(this).on('mousemove', mouseMove);
             $(this).on('mouseenter', mouseEnter);
             if (this.settings.reset) $(this).on('mouseleave', mouseLeave);
+            if (this.settings.glare) $(window).on('resize', updateGlareSize);
         };
 
         /**
@@ -178,6 +179,13 @@
                 'opacity': '0',
             });
 
+        };
+
+        const updateGlareSize = function () {
+            this.glareElement.css({
+                'width': `${$(this).outerWidth()*2}`,
+                'height': `${$(this).outerWidth()*2}`,
+            });
         };
 
         /**
