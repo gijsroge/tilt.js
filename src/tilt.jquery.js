@@ -14,10 +14,11 @@
          * Bind mouse movement evens on instance
          */
         const bindEvents = function() {
+            const _this = this;
             $(this).on('mousemove', mouseMove);
             $(this).on('mouseenter', mouseEnter);
             if (this.settings.reset) $(this).on('mouseleave', mouseLeave);
-            if (this.settings.glare) $(window).on('resize', updateGlareSize);
+            if (this.settings.glare) $(window).on('resize', updateGlareSize.bind(_this));
         };
 
         /**
@@ -181,6 +182,9 @@
 
         };
 
+        /**
+         * Update glare on resize
+         */
         const updateGlareSize = function () {
             this.glareElement.css({
                 'width': `${$(this).outerWidth()*2}`,

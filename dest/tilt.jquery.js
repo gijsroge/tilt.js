@@ -16,24 +16,25 @@
          * Bind mouse movement evens on instance
          */
         var bindEvents = function bindEvents() {
+            var _this = this;
             $(this).on('mousemove', mouseMove);
             $(this).on('mouseenter', mouseEnter);
             if (this.settings.reset) $(this).on('mouseleave', mouseLeave);
-            if (this.settings.glare) $(window).on('resize', updateGlareSize);
+            if (this.settings.glare) $(window).on('resize', updateGlareSize.bind(_this));
         };
 
         /**
          * Set transition only on mouse leave and mouse enter so it doesn't influence mouse move transforms
          */
         var setTransition = function setTransition() {
-            var _this = this;
+            var _this2 = this;
 
             if (this.timeout !== undefined) clearTimeout(this.timeout);
             $(this).css({ 'transition': this.settings.speed + 'ms ' + this.settings.easing });
             if (this.settings.glare) this.glareElement.css({ 'transition': 'opacity ' + this.settings.speed + 'ms ' + this.settings.easing });
             this.timeout = setTimeout(function () {
-                $(_this).css({ 'transition': '' });
-                if (_this.settings.glare) _this.glareElement.css({ 'transition': '' });
+                $(_this2).css({ 'transition': '' });
+                if (_this2.settings.glare) _this2.glareElement.css({ 'transition': '' });
             }, this.settings.speed);
         };
 
@@ -176,7 +177,6 @@
                 'left': '50%',
                 'pointer-events': 'none',
                 'background-image': 'linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)',
-                'opacity': '' + this.settings.maxGlare / 2,
                 'width': '' + $(this).outerWidth() * 2,
                 'height': '' + $(this).outerWidth() * 2,
                 'transform': 'rotate(180deg) translate(-50%, -50%)',
@@ -185,6 +185,9 @@
             });
         };
 
+        /**
+         * Update glare on resize
+         */
         var updateGlareSize = function updateGlareSize() {
             this.glareElement.css({
                 'width': '' + $(this).outerWidth() * 2,
@@ -214,13 +217,13 @@
 
         $.fn.tilt.reset = function () {
             $(this).each(function () {
-                var _this2 = this;
+                var _this3 = this;
 
                 this.mousePositions = getMousePositions.call(this);
                 this.settings = $(this).data('settings');
                 mouseLeave.call(this);
                 setTimeout(function () {
-                    _this2.reset = false;
+                    _this3.reset = false;
                 }, this.settings.transition);
             });
         };
@@ -229,7 +232,7 @@
          * Loop every instance
          */
         return this.each(function () {
-            var _this3 = this;
+            var _this4 = this;
 
             /**
              * Default settings merged with user settings
@@ -251,13 +254,13 @@
 
             this.init = function () {
                 // Store settings
-                $(_this3).data('settings', _this3.settings);
+                $(_this4).data('settings', _this4.settings);
 
                 // Prepare element
-                if (_this3.settings.glare) prepareGlare.call(_this3);
+                if (_this4.settings.glare) prepareGlare.call(_this4);
 
                 // Bind events
-                bindEvents.call(_this3);
+                bindEvents.call(_this4);
             };
 
             // Init
