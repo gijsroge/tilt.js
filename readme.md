@@ -60,7 +60,7 @@ tilt.tilt.reset.call(tilt);
 - **npm:** `npm install --save tilt.js`
 
 ### CDN
-- https://unpkg.com/tilt.js@1.1.19/dest/tilt.jquery.min.js
+- https://unpkg.com/tilt.js@1.1.20/dest/tilt.jquery.min.js
 
 ### Alternatives
 - **Vanilla JS:** https://github.com/micku7zu/vanilla-tilt.js
