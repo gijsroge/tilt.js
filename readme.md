@@ -6,7 +6,7 @@ A tiny requestAnimationFrame powered 60+fps lightweight parallax tilt effect for
 Weights just ⚖**1.71kb Gzipped**
 ![Tilt.js demo gif](http://gijsroge.github.io/tilt.js/tilt.js.gif)
 
-####Take a look at the **[landing page](http://gijsroge.github.io/tilt.js/)** for demo's.
+#### Take a look at the **[landing page](http://gijsroge.github.io/tilt.js/)** for demo's.
 
 ### Usage
 
