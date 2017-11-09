@@ -33,6 +33,8 @@ glare:          false,  // Enables glare effect
 maxGlare:       1       // From 0 - 1.
 ```
 
+If glare is set to true and you need to have clickable links, add ```.js-tilt-glare { pointer-events: none; }``` to your css.
+
 ### Events
 ```js
 const tilt = $('.js-tilt').tilt();
