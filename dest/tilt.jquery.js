@@ -194,7 +194,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
             // Style glare wrapper
             this.glareElementWrapper.css(stretch).css({
-                'overflow': 'hidden'
+                'overflow': 'hidden',
+                'pointer-events': 'none'
             });
 
             // Style glare element
@@ -202,7 +203,6 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
                 'position': 'absolute',
                 'top': '50%',
                 'left': '50%',
-                'pointer-events': 'none',
                 'background-image': 'linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)',
                 'width': '' + $(this).outerWidth() * 2,
                 'height': '' + $(this).outerWidth() * 2,

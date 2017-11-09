@@ -190,6 +190,7 @@
             // Style glare wrapper
             this.glareElementWrapper.css(stretch).css({
                 'overflow': 'hidden',
+                'pointer-events': 'none',
             });
 
             // Style glare element
@@ -197,7 +198,6 @@
                 'position': 'absolute',
                 'top': '50%',
                 'left': '50%',
-                'pointer-events': 'none',
                 'background-image': `linear-gradient(0deg, rgba(255,255,255,0) 0%, rgba(255,255,255,1) 100%)`,
                 'width': `${$(this).outerWidth()*2}`,
                 'height': `${$(this).outerWidth()*2}`,
