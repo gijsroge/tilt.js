@@ -119,7 +119,7 @@
 
             this.phonePositions = {x: newX, y: newY};
             requestTick.call(this);
-        }
+        };
 
         /**
          * When user mouse leaves tilt element
