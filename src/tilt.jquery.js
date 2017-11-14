@@ -112,10 +112,10 @@
         };
 
         const deviceMotionHandler = function(event) {
-            var accX = Math.round(event.accelerationIncludingGravity.x * 10) / 10,
-                accY = Math.round(event.accelerationIncludingGravity.y * 10) / 10,
-                newX = (accX / 10);
-                newY = (accY / 10);
+            var accX = Math.round(event.accelerationIncludingGravity.x * 10) / 10;
+            var accY = Math.round(event.accelerationIncludingGravity.y * 10) / 10;
+            var newX = (accX / 10);
+            var newY = (accY / 10);
 
             this.phonePositions = {x: newX, y: newY};
             requestTick.call(this);
