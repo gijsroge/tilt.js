@@ -114,10 +114,22 @@
         const deviceMotionHandler = function(event) {
             var accX = Math.round(event.accelerationIncludingGravity.x * 10) / 10;
             var accY = Math.round(event.accelerationIncludingGravity.y * 10) / 10;
-            var newX = (accX / 10);
-            var newY = (accY / 10);
 
-            this.phonePositions = {x: newX, y: newY};
+            const oldX = this.phonePositions.x;
+            const oldY = this.phonePositions.y;
+
+            //minimum thresholds for motion - ignore vibrations
+            const threshold = 0.1;
+            if (Math.abs(oldX - accX) < threshold)
+                accX = 0;
+            if (Math.abs(oldY - accY) < threshold)
+                accY = 0;
+
+            //complementary filter (low-pass) - gradual changes
+            accX = 0.99 * accX + 0.01 * newX;
+            accY = 0.99 * accY + 0.01 * newY;
+
+            this.phonePositions = {x: (accX / 10), y: (accY / 10)};
             requestTick.call(this);
         };
 
@@ -347,3 +359,4 @@
 
     return true;
 }));
+

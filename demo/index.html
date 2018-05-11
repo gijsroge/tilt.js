@@ -10,13 +10,28 @@
 <body>
 
 <header>
-    <div class="[ c-example__tilt ] js-tilt" data-tilt-axis="x" data-tilt-glare="true" data-tilt-perspective="1000" data-tilt-scale="1" data-tilt-speed="400" data-tilt-max="10">
+    <h1 id="data-report" style="position:absolute; top:0; left:0;"></h1>
+    <div class="[ c-example__tilt ] js-tilt" data-tilt-glare="true" data-tilt-perspective="1000" data-tilt-scale="1" data-tilt-speed="400" data-tilt-max="10">
         <div class="c-example__tilt-inner"></div>
     </div>
-<script src="./../node_modules/jquery/dist/jquery.slim.min.js"></script>
-<script src="./../dest/tilt.jquery.js"></script>
+</header>
+
+<script src="../node_modules/jquery/dist/jquery.slim.min.js"></script>
+<script src="../dest/tilt.jquery.js"></script>
 <script>
     const tilt = $('.js-tilt').tilt();
+
+    //show accelerometer readings
+    const deviceMotionHandler = function(event) {
+        var accX = Math.round(event.accelerationIncludingGravity.x * 10) / 10;
+        var accY = Math.round(event.accelerationIncludingGravity.y * 10) / 10;
+        var newX = (accX / 10);
+        var newY = (accY / 10);
+
+        $("#data-report").html(`x: ${newX.toFixed(2)} y: ${newY.toFixed(2)}`);
+        this.phonePositions = {x: newX, y: newY};
+    };
+    window.addEventListener('devicemotion', deviceMotionHandler, false);
 
     $('.js-destroy').on('click', function () {
         const element = $(this).closest('.js-parent').find('.js-tilt');
@@ -48,3 +63,4 @@
 </script>
 </body>
 </html>
+
