@@ -8,6 +8,9 @@ Weights just ⚖**1.71kb Gzipped**
 
 #### Take a look at the **[landing page](http://gijsroge.github.io/tilt.js/)** for demos.
 
+### Tilt.js in the wild
+http://creativetheory.agency/who-we-are/
+
 ### Usage
 
 ```html
