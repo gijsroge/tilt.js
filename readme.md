@@ -9,7 +9,8 @@ Weights just ⚖**1.71kb Gzipped**
 #### Take a look at the **[landing page](http://gijsroge.github.io/tilt.js/)** for demos.
 
 ### Tilt.js in the wild
-http://creativetheory.agency/who-we-are/
+* http://creativetheory.agency/who-we-are/
+* https://madewithlove.be/our-products/audits ([react version](https://github.com/jonathandion/react-tilt))
 
 ### Usage
 
