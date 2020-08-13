@@ -70,4 +70,6 @@ tilt.tilt.reset.call(tilt);
 ### Alternatives
 - **Vanilla JS:** https://github.com/micku7zu/vanilla-tilt.js
 - **React:** https://github.com/jonathandion/react-tilt
+- **React** https://github.com/jonahallibone/react-tilty
 - **Polymer:** https://github.com/YingshanDeng/polymer-tilt
+- **Preact** https://github.com/RomanistHere/preact-tilt
