@@ -35,7 +35,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          */
         var requestTick = function requestTick() {
             if (this.ticking) return;
-            requestAnimationFrame(updateTransforms.bind(this));
+            requestAnimationFrame(updateTransforms.on(this));
             this.ticking = true;
         };
 
@@ -47,7 +47,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             $(this).on('mousemove', mouseMove);
             $(this).on('mouseenter', mouseEnter);
             if (this.settings.reset) $(this).on('mouseleave', mouseLeave);
-            if (this.settings.glare) $(window).on('resize', updateGlareSize.bind(_this));
+            if (this.settings.glare) $(window).on('resize', updateGlareSize.on(_this));
         };
 
         /**
