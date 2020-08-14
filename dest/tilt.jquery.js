@@ -30,6 +30,8 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 })(function ($) {
     $.fn.tilt = function (options) {
 
+        var has_touch = 'ontouchstart' in document.documentElement;
+
         /**
          * RequestAnimationFrame
          */
@@ -44,9 +46,23 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
          */
         var bindEvents = function bindEvents() {
             var _this = this;
-            $(this).on('mousemove', mouseMove);
-            $(this).on('mouseenter', mouseEnter);
-            if (this.settings.reset) $(this).on('mouseleave', mouseLeave);
+
+            if (has_touch) {
+                // For Mobile
+                // Add support for accelerometeron mobile
+                window.addEventListener('devicemotion', deviceMotionHandler.bind(this), false);
+
+                this.phonePositions = { x: 0.0, y: 0.0 };
+
+                this.ticking = false;
+                $(this).css({ 'will-change': 'transform' });
+                setTransition.call(this);
+            } else {
+                $(this).on('mousemove', mouseMove);
+                $(this).on('mouseenter', mouseEnter);
+                if (this.settings.reset) $(this).on('mouseleave', mouseLeave);
+            }
+
             if (this.settings.glare) $(window).on('resize', updateGlareSize.bind(_this));
         };
 
@@ -99,6 +115,16 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             requestTick.call(this);
         };
 
+        var deviceMotionHandler = function deviceMotionHandler(event) {
+            var accX = Math.round(event.accelerationIncludingGravity.x * 10) / 10;
+            var accY = Math.round(event.accelerationIncludingGravity.y * 10) / 10;
+            var newX = accX / 10;
+            var newY = accY / 10;
+
+            this.phonePositions = { x: newX, y: newY };
+            requestTick.call(this);
+        };
+
         /**
          * When user mouse leaves tilt element
          */
@@ -121,13 +147,29 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
             var height = $(this).outerHeight();
             var left = $(this).offset().left;
             var top = $(this).offset().top;
-            var percentageX = (this.mousePositions.x - left) / width;
-            var percentageY = (this.mousePositions.y - top) / height;
-            // x or y position inside instance / width of instance = percentage of position inside instance * the max tilt value
-            var tiltX = (this.settings.maxTilt / 2 - percentageX * this.settings.maxTilt).toFixed(2);
-            var tiltY = (percentageY * this.settings.maxTilt - this.settings.maxTilt / 2).toFixed(2);
+
+            var percentageX, percentageY;
+            var tiltX, tiltY;
+            var angle;
+
+            var maxTilt;
+
+            if (has_touch) {
+                maxTilt = this.settings.maxTilt * 4.0;
+                percentageX = 1.0 - (this.phonePositions.x + 1) / 2.0;
+                percentageY = (this.phonePositions.y + 1) / 2.0;
+            } else {
+                maxTilt = this.settings.maxTilt;
+                percentageX = (this.mousePositions.x - left) / width;
+                percentageY = (this.mousePositions.y - top) / height;
+            }
+
+            //tilt
+            tiltX = (maxTilt / 2 - percentageX * maxTilt).toFixed(2);
+            tiltY = (percentageY * maxTilt - maxTilt / 2).toFixed(2);
             // angle
-            var angle = Math.atan2(this.mousePositions.x - (left + width / 2), -(this.mousePositions.y - (top + height / 2))) * (180 / Math.PI);
+            angle = Math.atan2(0.5 - percentageX, percentageY - 0.5) * (180 / Math.PI);
+
             // Return x & y tilt values
             return { tiltX: tiltX, tiltY: tiltY, 'percentageX': percentageX * 100, 'percentageY': percentageY * 100, angle: angle };
         };
