@@ -11,6 +11,7 @@ Weights just ⚖**1.71kb Gzipped**
 ### Tilt.js in the wild
 * http://creativetheory.agency/who-we-are/
 * https://madewithlove.be/our-products/audits ([react version](https://github.com/jonathandion/react-tilt))
+* https://unisocks.exchange/ ([react version](https://github.com/jonathandion/react-tilt))
 
 ### Usage
 
