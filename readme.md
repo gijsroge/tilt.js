@@ -75,5 +75,6 @@ tilt.tilt.reset.call(tilt);
 - **React** https://github.com/mkosir/react-parallax-tilt
 - **Polymer:** https://github.com/YingshanDeng/polymer-tilt
 - **Preact** https://github.com/RomanistHere/preact-tilt
+- **Angular** https://github.com/geometricpanda/angular-tilt/tree/main
 
 
